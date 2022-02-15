@@ -1,7 +1,5 @@
 #%%
-import torch
 import torch.nn as nn
-from torchsummary import summary
 from .unet2d import UNET2D
 from .unet3d_adj import UNET3D_ADJ
 from .unet3d_org import UNET3D_ORG
@@ -45,21 +43,3 @@ class DeepForestSpecies(nn.Module):
         x = self.model(x)
 
         return x
-
-
-#%%
-
-# def test():
-#     x = torch.randn((30, 29, 32, 32))
-#     model = DeepForestAge(in_channels=29, out_channels=64)
-#     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#     preds = model(x)
-#     print(preds.shape)
-
-#     # summary(model.to(device), (29, 32, 32))
-
-
-# if __name__ == "__main__":
-#     test()
-
-# %%
