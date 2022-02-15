@@ -5,7 +5,7 @@ import torch
 import torch.nn.functional as F
 import Forest
 
-from model.DeepForest import DeepForestSpecies
+from model.deep_forest import DeepForestSpecies
 from tqdm import tqdm
 from utils.checkpoint import load_checkpoint
 from recls import recls

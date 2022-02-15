@@ -7,7 +7,7 @@ import numpy as np
 import argparse
 from tqdm import tqdm
 
-from model.DeepForest import DeepForestSpecies
+from model.deep_forest import DeepForestSpecies
 from utils.check_accuracy import check_accuracy
 from utils.checkpoint import save_checkpoint, load_checkpoint
 from utils.loader import get_loaders
