@@ -76,7 +76,7 @@ class Trainer:
         )
 
     def _build_logs(self):
-        self.logs_file = f"logs/{self.args.forest_attr}/{self.args.forest_attr}_UNET_{self.args.backbone}.csv"
+        self.logs_file = f"logs/{self.args.forest_attr}/{self.args.forest_attr}_unet_{self.args.backbone}.csv"
 
     def train(self):
         if self.args.load_model is not None:
@@ -168,7 +168,7 @@ def main():
         "--backbone",
         type=str,
         default="3d_enc_mid_dec_acb",
-        choices=["2d", "3d", "3d_dec_acb", "3d_enc_mid_dec_acb"],
+        choices=["2d", "3d_org", "3d_adj", "3d_dec_acb", "3d_enc_mid_dec_acb"],
         help="backbone of the model (default: 3d_enc_mid_dec_acb)",
     )
     # training hyper params

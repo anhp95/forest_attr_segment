@@ -32,7 +32,7 @@ class UNET3D_DEC_ACB(nn.Module):
             )
             self.decoder.append(TripleConv3D(ft * 2, ft))
 
-        self.bottle_neck_aspp = DoubleConv3D(features[-1], features[-1] * 2)
+        self.mid_conv = DoubleConv3D(features[-1], features[-1] * 2)
         self.aspp = ACB(features[0], out_channels, rates=RATES)
         # self.final_conv = BasicConv3D(features[0], out_channels, kernel_size=1)
 
@@ -44,7 +44,7 @@ class UNET3D_DEC_ACB(nn.Module):
             skip_connections.append(x)
             x = self.pool(x)
 
-        x = self.bottle_neck_aspp(x)
+        x = self.mid_conv(x)
         skip_connections = skip_connections[::-1]
 
         for idx in range(0, len(self.decoder), 2):

@@ -17,7 +17,7 @@ IMG_SHAPE = (13, 4, 32, 32)
 # IMG_SHAPE = (40, 32, 32)  # 27, 14
 NUM_CLASSES = 4
 FEATURES = [64, 128]
-backbone = "3d_enc_dec_aspp"
+BACKBONE = "3d_enc_mid_dec_acb"
 INFER_DIR = "data/data_infer"
 
 
@@ -33,11 +33,11 @@ def predict(params):
     forest_attr = params["forest_attr"]
     acc = params["acc"]
     region = params["region"]
-    case = params["case"]
+    backbone = params["backbone"]
 
-    checkpoint_file = f"checkpoint/{forest_attr}/{case}/0.{acc}.pth.tar"
+    checkpoint_file = f"checkpoint/{forest_attr}/{backbone}/0.{acc}.pth.tar"
     in_npy = f"{INFER_DIR}/input/{region}_13b.npy"
-    out_dir = f"{INFER_DIR}/output/{forest_attr}/{case}"
+    out_dir = f"{INFER_DIR}/output/{forest_attr}/{backbone}"
     out_npy = os.path.join(out_dir, f"{region}_{acc}.npy")
 
     if not os.path.exists(out_dir):
@@ -46,7 +46,7 @@ def predict(params):
     model = DeepForestSpecies(
         in_channels=IMG_SHAPE[0],
         out_channels=NUM_CLASSES,
-        backbone=backbone,
+        backbone=BACKBONE,
         features=FEATURES,
     ).to(DEVICE)
     load_checkpoint(checkpoint_file, model)
@@ -73,11 +73,13 @@ def main():
 
     forest_attr = "spec"
     region = "ena"
-    case = "3d_aspp_enc_bot_dec"
+    backbone = BACKBONE
     acc = 7780
 
-    low_res_tif = f"data/spec_map/low-res/{region}_{forest_attr}_{case}_{acc}.tif"
-    high_res_tif = f"data/spec_map/high-res/{region}_{forest_attr}_{case}_{acc}.tif"
+    low_res_tif = f"data/spec_map/low-res/{region}_{forest_attr}_{backbone}_{acc}.tif"
+    high_res_tif = (
+        f"data/spec_map/high-res/{region}_{forest_attr}_{backbone}_{acc}_2.tif"
+    )
 
     l2_img_dir = fr"D:\co2_data\DL\large_img\sentinel\s2_{region}_recls\l2"
 
@@ -85,7 +87,7 @@ def main():
         "forest_attr": forest_attr,
         "acc": acc,
         "region": region,
-        "case": case,
+        "backbone": backbone,
     }
     pred_npy_path = predict(params)
 

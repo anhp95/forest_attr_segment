@@ -3,7 +3,8 @@ import torch
 import torch.nn as nn
 from torchsummary import summary
 from .unet2d import UNET2D
-from .unet3d import UNET3D
+from .unet3d_adj import UNET3D_ADJ
+from .unet3d_org import UNET3D_ORG
 from .unet3d_dec_acb import UNET3D_DEC_ACB
 from .unet3d_enc_mid_dec_acb import UNET3D_EMD_ACB
 
@@ -22,8 +23,12 @@ class DeepForestSpecies(nn.Module):
             self.model = UNET2D(
                 in_channels=in_channels, out_channels=out_channels, features=features
             )
-        elif backbone == "3d":
-            self.model = UNET3D(
+        elif backbone == "3d_org":
+            self.model = UNET3D_ORG(
+                in_channels=in_channels, out_channels=out_channels, features=features
+            )
+        elif backbone == "3d_adj":
+            self.model = UNET3D_ADJ(
                 in_channels=in_channels, out_channels=out_channels, features=features
             )
         elif backbone == "3d_dec_acb":
