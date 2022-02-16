@@ -80,7 +80,9 @@ class Trainer:
         _logs_dir = f"logs/{self.args.forest_attr}/{self.args.backbone}"
         if not os.path.isdir(_logs_dir):
             os.makedirs(_logs_dir)
-        self.logs_file = f"{self.args.backbone}_{self.args.lr}.csv"
+        self.logs_file = os.path.join(
+            _logs_dir, f"{self.args.backbone}_{self.args.lr}.csv"
+        )
 
     def train(self):
         if self.args.load_model is not None:
