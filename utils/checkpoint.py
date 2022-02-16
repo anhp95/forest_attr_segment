@@ -4,10 +4,10 @@ import torch
 
 def save_checkpoint(state, acc, folder):
     print("=> Saving checkpoint")
-    check_point_dir = "./checkpoint/"
+    check_point_dir = os.path.join("./checkpoint/", folder)
     if not os.path.isdir(check_point_dir):
         os.makedirs(check_point_dir)
-    filename = os.path.join(check_point_dir, f"{folder}/{acc:.2f}.pth.tar")
+    filename = os.path.join(check_point_dir, f"{acc:.2f}.pth.tar")
     torch.save(state, filename)
 
 

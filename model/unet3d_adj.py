@@ -59,15 +59,15 @@ class UNET3D_ADJ(nn.Module):
 
 
 # %%
-def test():
-    x = torch.randn((30, 9, 4, 32, 32))
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = UNET3D_ADJ(in_channels=9, out_channels=4, features=[64, 128])
-    pred = model(x)
-    print(pred.shape)
-    summary(model.to(device), (9, 4, 32, 32))
+# def test():
+#     x = torch.randn((30, 9, 4, 32, 32))
+#     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#     model = UNET3D_ADJ(in_channels=9, out_channels=4, features=[64, 128])
+#     pred = model(x)
+#     print(pred.shape)
+#     summary(model.to(device), (9, 4, 32, 32))
 
 
-test()
+# test()
 
 # %%

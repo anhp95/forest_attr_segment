@@ -1,4 +1,5 @@
 #%%
+import os
 import torch
 import torch.optim as optim
 import torch.nn as nn
@@ -76,7 +77,10 @@ class Trainer:
         )
 
     def _build_logs(self):
-        self.logs_file = f"logs/{self.args.forest_attr}/{self.args.forest_attr}_unet_{self.args.backbone}.csv"
+        _logs_dir = f"logs/{self.args.forest_attr}/{self.args.backbone}"
+        if not os.path.isdir(_logs_dir):
+            os.makedirs(_logs_dir)
+        self.logs_file = f"{self.args.backbone}_{self.args.lr}.csv"
 
     def train(self):
         if self.args.load_model is not None:
@@ -138,7 +142,11 @@ class Trainer:
                     "state_dict": self.model.state_dict(),
                     "optimizer": optimizer.state_dict(),
                 }
-                save_checkpoint(checkpoint, acc, prefix_folder=self.forest_attr)
+                save_checkpoint(
+                    checkpoint,
+                    acc,
+                    folder=os.path.join(self.args.forest_attr, self.args.backbone),
+                )
             if (epoch + 1) % 10 == 0:
                 self.args.lr = self.args.lr * 0.5
 
@@ -164,12 +172,20 @@ def main():
         choices=["spec", "age"],
         help="which forest attribute is going to be segmented (default: spec)",
     )
+    # model params
     parser.add_argument(
         "--backbone",
         type=str,
         default="3d_enc_mid_dec_acb",
         choices=["2d", "3d_org", "3d_adj", "3d_dec_acb", "3d_enc_mid_dec_acb"],
         help="backbone of the model (default: 3d_enc_mid_dec_acb)",
+    )
+    parser.add_argument(
+        "--features",
+        type=list,
+        default=[64, 128],
+        choices=[[64, 128], [64, 128, 256, 512]],
+        help="features depth of the model (default: [64, 128])",
     )
     # training hyper params
     parser.add_argument(
@@ -219,9 +235,17 @@ def main():
     )
     args = parser.parse_args()
 
+    # set features depth
+    if args.backbone == "2d":
+        args.features = [64, 128, 256, 512]  # original unet 2d
+    elif "3d" in args.backbone:
+        args.features = [64, 128]
+
     trainer = Trainer(args)
     trainer.train()
 
 
 if __name__ == "__main__":
     main()
+
+# %%

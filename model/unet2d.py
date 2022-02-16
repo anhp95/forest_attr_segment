@@ -88,6 +88,3 @@ class UNET2D(nn.Module):
 
 
 # test()
-
-
-# %%
