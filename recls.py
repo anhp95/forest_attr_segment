@@ -74,13 +74,6 @@ def recls(low_res_tif, out_tif, input_s2l2):
     write_tif(lr_arr.reshape(rows, cols), metadata, out_tif)
 
 
-# region = "ena"
-# acc = "7777"
-# low_res_tif = fr"..\data\spec_map\{region}_spec_map_3d_aspp_enc_bot_dec_{acc}_voted.tif"
-# out_tif = fr"..\data\spec_map\{region}\{region}_spec_recls_encBotDec_{acc}_km.tif"
-# input_s2l2 = fr"D:\co2_data\DL\large_img\sentinel\s2_{region}_recls\l2"
-
-
 # %%
 # spec_arr = read_tif(out_tif)[0]
 # spec_arr = spec_arr.reshape(-1)

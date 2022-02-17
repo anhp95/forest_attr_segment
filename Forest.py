@@ -222,7 +222,6 @@ class Forest:
         forest_mask, metadata = read_tif(_FOREST_MAP)
         (rows, cols) = forest_mask.shape
         stacked_ts_arr = np.stack(preds, axis=-1).reshape(rows * cols, -1)
-        print(stacked_ts_arr.shape)
         final_arr = [Counter(ts_arr).most_common(1)[0][0] for ts_arr in stacked_ts_arr]
         final_arr = np.array(final_arr).reshape(rows, cols)
 

@@ -17,7 +17,7 @@ class DeepForestSpecies(nn.Module):
     ):
         super(DeepForestSpecies, self).__init__()
 
-        if backbone == "2d":
+        if "2d" in backbone:
             self.model = UNET2D(
                 in_channels=in_channels, out_channels=out_channels, features=features
             )

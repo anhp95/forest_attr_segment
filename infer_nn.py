@@ -3,6 +3,8 @@ import os
 import numpy as np
 import torch
 import torch.nn.functional as F
+import argparse
+
 import Forest
 
 from model.deep_forest import DeepForestSpecies
@@ -63,23 +65,24 @@ def predict(params):
     spec = torch.cat(spec_arr)
 
     spec = spec.to("cpu")
-    print("----writing npy-----")
+    print("----writing predicted npy-----")
     np.save(out_npy, spec)
 
     return out_npy
 
 
 def main():
+    # parser = argparse.ArgumentParser(
+    #     description="Generating High-Resolution Tree Species Map"
+    # )
 
     forest_attr = "spec"
     region = "ena"
     backbone = BACKBONE
-    acc = 7780
+    acc = 7816
 
     low_res_tif = f"data/spec_map/low-res/{region}_{forest_attr}_{backbone}_{acc}.tif"
-    high_res_tif = (
-        f"data/spec_map/high-res/{region}_{forest_attr}_{backbone}_{acc}_2.tif"
-    )
+    high_res_tif = f"data/spec_map/high-res/{region}_{forest_attr}_{backbone}_{acc}.tif"
 
     l2_img_dir = fr"D:\co2_data\DL\large_img\sentinel\s2_{region}_recls\l2"
 

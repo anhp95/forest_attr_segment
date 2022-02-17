@@ -42,7 +42,12 @@ class Trainer:
         if "3d" in self.args.backbone:
             self.img_shape = (13, 4, 32, 32)
         elif "2d" in self.args.backbone:
-            self.img_shape = (40, 32, 32)
+            if "p1p2p3" in self.args.backbone:
+                self.img_shape = (40, 32, 32)
+            elif "p1p2" in self.args.backbone:
+                self.img_shape = (27, 32, 32)
+            else:
+                self.img_shape = (14, 32, 32)
 
     def _build_weights(self):
         if self.args.forest_attr == "spec":
@@ -179,7 +184,15 @@ def main():
         "--backbone",
         type=str,
         default="3d_enc_mid_dec_acb",
-        choices=["2d", "3d_org", "3d_adj", "3d_dec_acb", "3d_enc_mid_dec_acb"],
+        choices=[
+            "2d_p2",
+            "2d_p1p2",
+            "2d_p1p2p3",
+            "3d_org",
+            "3d_adj",
+            "3d_dec_acb",
+            "3d_enc_mid_dec_acb",
+        ],
         help="backbone of the model (default: 3d_enc_mid_dec_acb)",
     )
     parser.add_argument(

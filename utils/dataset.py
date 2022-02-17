@@ -23,7 +23,7 @@ class NFDataset(Dataset):
         image = np.load(img_path)
         image = image.reshape(self.img_shape)
 
-        if self.cnn_mode == "2d":  # 2d cnn
+        if "2d" in self.cnn_mode:  # 2d cnn
             mask = np.load(mask_path)
             # mask = _relabel_spec(mask)
         elif "3d" in self.cnn_mode:  # # 3d cnn
