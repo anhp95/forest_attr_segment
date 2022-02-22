@@ -1,4 +1,3 @@
-#%%
 import os
 import glob
 import numpy as np
@@ -54,5 +53,5 @@ def main():
     print(f"f1: {f1_score(y_val, y_pred)}")
     print(f"kappa: {cohen_kappa_score(y_val, y_pred)}")
 
-
-# %%
+if __name__ == '__main__':
+    main()
