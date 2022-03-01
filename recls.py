@@ -29,6 +29,8 @@ def extract_bow(list_tif, spec_arr, label_val, n_cls=10):
         list_arr.append(tif_arr)
 
     stacked_arr = np.stack((list_arr), axis=-1)
+    # print("got NaN: ", np.count_nonzero(np.isnan(stacked_arr)))
+    # stacked_arr = np.nan_to_num(stacked_arr, nan=0)
 
     model = KMeans(n_clusters=n_cls)
 
@@ -46,12 +48,11 @@ def extract_bow(list_tif, spec_arr, label_val, n_cls=10):
     return X_train, y_train, X_pred, index
 
 
-def recls(low_res_tif, out_tif, input_s2l2):
+def recls(low_res_tif, out_tif, input_s2l2, n_cls=10):
     list_s2l2 = glob.glob(os.path.join(input_s2l2, "*.tif"))
     lr_arr, metadata = read_tif(low_res_tif)
     rows, cols = lr_arr.shape
     lr_arr = lr_arr.reshape(-1)
-    n_cls = 10
 
     X_sugi, y_sugi, sugi_pred, sugi_index = extract_bow(list_s2l2, lr_arr, 1, n_cls)
     X_hino, y_hino, hino_pred, hino_index = extract_bow(list_s2l2, lr_arr, 4, n_cls)
@@ -61,15 +62,22 @@ def recls(low_res_tif, out_tif, input_s2l2):
     X = np.vstack((X_sugi, X_bf, X_cf, X_hino))
     y = np.hstack((y_sugi, y_bf, y_cf, y_hino))
 
-    GNB = GaussianNB()
-    GNB.fit(X, y)
+    model = GaussianNB()
+    model.fit(X, y)
 
-    lr_arr[sugi_index] = GNB.predict(sugi_pred)
-    lr_arr[hino_index] = GNB.predict(hino_pred)
-    lr_arr[bf_index] = GNB.predict(bf_pred)
-    lr_arr[cf_index] = GNB.predict(cf_pred)
+    lr_arr[sugi_index] = model.predict(sugi_pred)
+    lr_arr[hino_index] = model.predict(hino_pred)
+    lr_arr[bf_index] = model.predict(bf_pred)
+    lr_arr[cf_index] = model.predict(cf_pred)
 
     print("write high-res tif")
+
+    print("area of sugi:", np.count_nonzero(lr_arr[lr_arr == 1]) / 100)
+    print("area of BF:", np.count_nonzero(lr_arr[lr_arr == 2]) / 100)
+    print("area of C:", np.count_nonzero(lr_arr[lr_arr == 3]) / 100)
+    print("area of cypress:", np.count_nonzero(lr_arr[lr_arr == 4]) / 100)
+
+    lr_arr[lr_arr < 0] = 0
 
     write_tif(lr_arr.reshape(rows, cols), metadata, out_tif)
 
