@@ -190,16 +190,20 @@ def main():
             "2d_p1p2p3",
             "3d_org",
             "3d_adj",
-            "3d_dec_acb",
-            "3d_enc_mid_dec_acb",
+            "3d_adj_dec_acb",
+            "3d_adj_emd_acb",
+            "3d_org_emd_acb",
         ],
-        help="backbone of the model (default: 3d_enc_mid_dec_acb)",
+        help="backbone of the model (default: 3d_adj_emd_acb)",
     )
     parser.add_argument(
         "--features",
         type=list,
-        default=[64, 128],
-        choices=[[64, 128], [64, 128, 256, 512]],
+        default=[32, 64],
+        # choices=[
+        #     [64, 128],
+        #     [64, 128, 256, 512],
+        # ],
         help="features depth of the model (default: [64, 128])",
     )
     # training hyper params
@@ -253,8 +257,8 @@ def main():
     # set features depth
     if args.backbone == "2d":
         args.features = [64, 128, 256, 512]  # original unet 2d
-    elif "3d" in args.backbone:
-        args.features = [64, 128]
+    # elif "3d" in args.backbone:
+    #     args.features = [64, 128]
 
     trainer = Trainer(args)
     trainer.train()

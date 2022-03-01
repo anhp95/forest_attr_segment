@@ -9,9 +9,9 @@ from .acb import ACB
 RATES = [3, 6, 9]
 
 
-class UNET3D_DEC_ACB(nn.Module):
+class UNET3D_ADJ_DEC_ACB(nn.Module):
     def __init__(self, in_channels, out_channels, features=[64, 128]):
-        super(UNET3D_DEC_ACB, self).__init__()
+        super(UNET3D_ADJ_DEC_ACB, self).__init__()
 
         self.encoder = nn.ModuleList()
         self.decoder = nn.ModuleList()
@@ -63,7 +63,7 @@ class UNET3D_DEC_ACB(nn.Module):
 # def test():
 #     x = torch.randn((30, 13, 4, 32, 32))
 #     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#     model = UNET3D_DEC_ACB(in_channels=13, out_channels=4, features=[64, 128])
+#     model = UNET3D_ADJ_DEC_ACB(in_channels=13, out_channels=4, features=[64, 128])
 #     pred = model(x)
 #     print(pred.shape)
 #     summary(model.to(device), (13, 4, 32, 32))

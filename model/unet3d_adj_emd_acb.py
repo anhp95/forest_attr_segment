@@ -43,9 +43,9 @@ class _Encoder_ACB(nn.Module):
         return x
 
 
-class UNET3D_EMD_ACB(nn.Module):
+class UNET3D_ADJ_EMD_ACB(nn.Module):
     def __init__(self, in_channels, out_channels, features=[64, 128]):
-        super(UNET3D_EMD_ACB, self).__init__()
+        super(UNET3D_ADJ_EMD_ACB, self).__init__()
 
         self.encoder = nn.ModuleList()
         self.decoder = nn.ModuleList()
@@ -99,7 +99,7 @@ class UNET3D_EMD_ACB(nn.Module):
 # def test():
 #     x = torch.randn((30, 9, 4, 32, 32))
 #     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#     model = UNET3D_EMD_ACB(9, 4, [64, 128])
+#     model = UNET3D_ADJ_EMD_ACB(9, 4, [64, 128])
 #     pred = model(x)
 #     print(pred.shape)
 #     summary(model.to(device), (9, 4, 32, 32))
