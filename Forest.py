@@ -202,7 +202,6 @@ class Forest:
         l_index = Forest.crop_index_infer(_FOREST_MAP)
         forest_mask, _ = read_tif(_FOREST_MAP)
         spec_arr = np.load(npy_file)
-        print(spec_arr.shape)
 
         (rows, cols) = forest_mask.shape
         zero_arr = np.zeros((rows, cols))
@@ -589,10 +588,10 @@ def get_trainVal_stats(species_obj, age_obj):
     return spec_count_train, spec_count_val, age_count_train, age_count_val
 
 
-def gen_infer_set(regional_img_dir, region, forest_attr="spec"):
+def gen_infer_set(img_dir, region):
 
-    img_dir = os.path.join(regional_img_dir, region)
-    out_file = f"../data/data_infer/{forest_attr}/input/{region}_13b.npy"
+    img_dir = os.path.join(img_dir, region)
+    out_file = f"data/data_infer/input/{region}_13b.npy"
 
     list_tif = glob.glob(os.path.join(img_dir, "*.tif"))
     infer_input = Forest.gen_infer_obj_from_tif(list_tif, cnn_mode="3d")
@@ -633,14 +632,11 @@ def sample_run():
 
     """Generate input to inference"""
     REGION = "ena"
-    REGIONAL_IMG_DIR = r"D:\co2_data\DL\large_img\sentinel\preprocessing"
-    gen_infer_set(REGIONAL_IMG_DIR, REGION, forest_attr="spec")
+    IMG_DIR = r"D:\co2_data\DL\large_img\sentinel\preprocessing"
+    gen_infer_set(IMG_DIR, REGION, forest_attr="spec")
 
     """Generate predicted spec/age map"""
     CASE = "3d_aspp_enc_bot_dec_7780_2"
 
-    gen_predicted_map(REGIONAL_IMG_DIR, REGION, CASE, forest_attr="spec")
-    gen_predicted_map(REGIONAL_IMG_DIR, REGION, CASE, forest_attr="age")
-
-
-# %%
+    gen_predicted_map(IMG_DIR, REGION, CASE, forest_attr="spec")
+    gen_predicted_map(IMG_DIR, REGION, CASE, forest_attr="age")
