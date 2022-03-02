@@ -80,7 +80,7 @@ def main():
     features = [64, 128]
     acc = 7780
 
-    n_cls = 7  # 10-ena, 7-nakat,
+    n_cls = 7  # 10-ena, 7-nakat, 5-tono,
 
     low_res_tif = (
         f"data/spec_map/{region}/low-res/{region}_{forest_attr}_{backbone}_{acc}.tif"
@@ -103,6 +103,3 @@ def main():
 
 
 main()
-# %%
-
-# %%
