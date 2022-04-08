@@ -8,11 +8,11 @@ import numpy as np
 import argparse
 from tqdm import tqdm
 
+from mypath import get_path_train
 from model.deep_forest import DeepForestSpecies
 from utils.check_accuracy import check_accuracy
 from utils.checkpoint import save_checkpoint, load_checkpoint
 from utils.loader import get_loaders
-from mypath import get_path
 
 # INIT_LR = 1e-5
 # BATCH_SIZE = 16
@@ -21,7 +21,7 @@ from mypath import get_path
 # PIN_MEMORY = True
 # LOAD_MODEL = False
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-MAX_ACC = 0.77
+MAX_ACC = 0.80
 FEATURES = [64, 128]
 
 
@@ -66,7 +66,7 @@ class Trainer:
         ).to(self.device)
 
     def _build_loader(self):
-        train_img_dir, train_mask_dir, val_img_dir, val_mask_dir = get_path(
+        train_img_dir, train_mask_dir, val_img_dir, val_mask_dir = get_path_train(
             self.img_shape, self.args.forest_attr, self.args.backbone
         )
         self.train_loader, self.val_loader = get_loaders(
@@ -183,7 +183,7 @@ def main():
     parser.add_argument(
         "--backbone",
         type=str,
-        default="3d_enc_mid_dec_acb",
+        default="3d_adj_emd_acb",
         choices=[
             "2d_p2",
             "2d_p1p2",
@@ -195,16 +195,6 @@ def main():
             "3d_org_emd_acb",
         ],
         help="backbone of the model (default: 3d_adj_emd_acb)",
-    )
-    parser.add_argument(
-        "--features",
-        type=list,
-        default=[32, 64],
-        # choices=[
-        #     [64, 128],
-        #     [64, 128, 256, 512],
-        # ],
-        help="features depth of the model (default: [64, 128])",
     )
     # training hyper params
     parser.add_argument(
@@ -255,7 +245,7 @@ def main():
     args = parser.parse_args()
 
     # set features depth
-    if args.backbone == "2d":
+    if "2d" in args.backbone:
         args.features = [64, 128, 256, 512]  # original unet 2d
     # elif "3d" in args.backbone:
     #     args.features = [64, 128]

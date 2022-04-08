@@ -1,5 +1,7 @@
 from .dataset import NFDataset
 from torch.utils.data import DataLoader
+import torch
+import numpy as np
 
 
 def get_loaders(
@@ -44,3 +46,10 @@ def get_loaders(
     )
 
     return train_loader, val_loader
+
+
+def load_npy(npy_file, batch_size):
+
+    dataset = torch.from_numpy(np.load(npy_file))
+    data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size)
+    return data_loader
