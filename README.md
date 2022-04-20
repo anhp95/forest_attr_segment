@@ -1,6 +1,6 @@
 # forest_attr_segment
 
-**Update on 2022/10/02. Provide reclassification step to enhance the resolution of result image**
+**Update on 2022/10/02. Provide reclassification step to enhance the resolution of the result image (only for forest species)**
 
 ### TODO
 
@@ -34,9 +34,9 @@ The source code is test with Anaconda and Python 3.9.7.
 
 Follow these steps to train the model with our dataset
 
-1. Download the dataset via [Google Drive]()
+1. Download the dataset via [Google Drive](https://drive.google.com/drive/folders/1j8Japh4UmZAyoHueJX9C_rb8muqS3plW?usp=sharing)
 
-2. Configure the dataset path in [mypath.py]()
+2. Configure the dataset path in [mypath.py](https://github.com/anhp95/forest_attr_segment/blob/main/mypath.py)
 
 3. Activate your Anaconda environment
 
@@ -47,34 +47,17 @@ Follow these steps to train the model with our dataset
                   [--backbone {2d_p2,2d_p1p2,2d_p1p2p3,3d_org,3d_adj,3d_adj_dec_acb,3d_adj_emd_acb,3d_org_emd_acb}]
                   [--num_epochs NUM_EPOCHS] [--batch_size BATCH_SIZE] [--lr LR] [--load_model LOAD_MODEL]
                   [--logs_file LOGS_FILE] [--pin_memory] [--no_workers NO_WORKERS]
-
-   PyTorch Tree Species/Age Segmentation Training
-
-   optional arguments:
-   -h, --help            show this help message and exit
-   --forest_attr {spec,age}
-                           which forest attribute is going to be segmented (default: spec)
-   --backbone {2d_p2,2d_p1p2,2d_p1p2p3,3d_org,3d_adj,3d_adj_dec_acb,3d_adj_emd_acb,3d_org_emd_acb}
-                           backbone of the model (default: 3d_adj_emd_acb)
-   --num_epochs NUM_EPOCHS
-                           Number of epochs (default: 100)
-   --batch_size BATCH_SIZE
-                           batch size (default: 16)
-   --lr LR               learning rate (default: 1e-5)
-   --load_model LOAD_MODEL
-                           path to the checkpoint file (default: None)
-   --logs_file LOGS_FILE
-                           put the path to the logs directory (default: logs/)
-   --pin_memory          whether use nesterov (default: False)
-   --no_workers NO_WORKERS
-                           The number of wokers for dataloader (default: 2)
    ```
 
 ### Inference
 
-Follow these step to use the trained model to infer your data
+1. Input arguments: (see the full set of input arguments via python infer_nn.py --help)
 
-1. Low-resolution inference
-2. High-resolution inference
+   ```Shell
+   usage: infer_nn.py [-h] [--forest_attr {spec,age}]
+                  [--backbone {2d_p2,2d_p1p2,2d_p1p2p3,3d_org,3d_adj,3d_adj_dec_acb,3d_adj_emd_acb,3d_org_emd_acb}]
+                  [--batch_size BATCH_SIZE] [--region {ena,nakat,mizunami,toki,tajimi,tono}] [--recls {0,1}]
+                  [--n_clusters N_CLUSTERS]
+   ```
 
-### Acknowledgement
+Note. High-resolution inference (Only available for forest species)
