@@ -2,16 +2,12 @@
 
 **Update on 2022/10/02. Provide reclassification step to enhance the resolution of the result image (only for forest species)**
 
-### TODO
-
-- [x] Support different 2D/3D UNET based architecture with Atrous Convolution Blocks for forest attribute (species, age) segmentation
-- [x] Support training/validation dataset from Sentinel 1/2 in GIFU prefecture - Japan.
-
 ### Introduction
 
 This is the Pytorch (1.9.1) implementation of Deep Learning model in "FOREST-RELATED SDG ISSUES MONITORING FOR DATA-SCARE REGIONS EMPLOYING MACHINE LEARNING AND REMOTE SENSING - A CASE STUDY FOR ENA CITY, JAPAN".
 
-It can use with 2D/3D UNET-based CNN with Atrous Convolution Blocks
+- [x] Support different 2D/3D UNET based architecture with Atrous Convolution Blocks for forest attribute (species, age) segmentation
+- [x] Support training/validation dataset from Sentinel 1/2 in GIFU prefecture - Japan.
 
 ### Installation
 
