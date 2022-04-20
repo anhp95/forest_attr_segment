@@ -10,6 +10,7 @@ def get_path_train(img_shape, forest_attr="spec", backbone="3d"):
     elif "2d" in backbone:
         folder = f"data_{forest_attr}_{img_shape[0]}d_{img_shape[1]}x{img_shape[2]}"
 
+    # Configure your path to training set here
     train_img_dir = f"{train_dir}/{folder}/train/image/"
     train_mask_dir = f"{train_dir}/{folder}/train/mask/"
     val_img_dir = f"{train_dir}/{folder}/val/image/"
@@ -25,6 +26,7 @@ def get_path_infer(infer_obj, args):
     backbone = infer_obj.backbone
     n_clusters = args.n_clusters
 
+    # Configure your path to reclassion dataset here
     s2_img_dir = f"D:/co2_data/DL/large_img/sentinel/s2_{region}_recls/l2"
 
     map_dir = f"data/{forest_attr}_map"

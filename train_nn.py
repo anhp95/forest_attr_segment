@@ -91,7 +91,7 @@ class Trainer:
 
     def train(self):
         if self.args.load_model is not None:
-            load_checkpoint(torch.load(self.args.load_model), self.model)
+            load_checkpoint(self.args.load_model, self.model)
             check_accuracy(self.val_loader, self.model, DEVICE)
 
         loss_values = []
@@ -221,7 +221,7 @@ def main():
         "--load_model",
         type=str,
         default=None,
-        help="put the path to the checkpoint file (default: None)",
+        help="path to the checkpoint file (default: None)",
     )
     # logs
     parser.add_argument(
@@ -244,11 +244,13 @@ def main():
     )
     args = parser.parse_args()
 
-    # set features depth
+    # features depth
     if "2d" in args.backbone:
-        args.features = [64, 128, 256, 512]  # original unet 2d
-    # elif "3d" in args.backbone:
-    #     args.features = [64, 128]
+        args.features = [64, 128, 256, 512]  # original UNET 2d feature depth
+    elif "3d_org" in args.backbone:
+        args.features = [64, 128, 256]  # original UNET 3D feature depth
+    else:
+        args.features = [64, 128]  # adjusted features depth
 
     trainer = Trainer(args)
     trainer.train()

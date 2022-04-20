@@ -30,7 +30,7 @@ class _DoubleConv3D_DEC(nn.Module):
 
 
 class UNET3D_ORG(nn.Module):
-    def __init__(self, in_channels, out_channels, features=[64, 128, 256, 512]):
+    def __init__(self, in_channels, out_channels, features=[64, 128, 256]):
         super(UNET3D_ORG, self).__init__()
 
         self.ups = nn.ModuleList()

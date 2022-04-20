@@ -5,7 +5,7 @@ from .unet3d_adj import UNET3D_ADJ
 from .unet3d_org import UNET3D_ORG
 from .unet3d_adj_dec_acb import UNET3D_ADJ_DEC_ACB
 from .unet3d_adj_emd_acb import UNET3D_ADJ_EMD_ACB
-from .unet3d_org_enc_mid_dec_acb import UNET3D_ORG_EMD_ACB
+from .unet3d_org_emd_acb import UNET3D_ORG_EMD_ACB
 
 
 class DeepForestSpecies(nn.Module):
