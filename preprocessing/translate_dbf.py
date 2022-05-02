@@ -155,9 +155,14 @@ def main(dbf_file):
     return df_MFA
 
 
-dbf_file = r"D:\Takejima-sensei\ena_private_forest\all_en\2018_all.dbf"
-df = main(dbf_file)
-print(df)
+# %%
+if __name__ == "__main__":
 
+    dbf_file = r"D:\Takejima-sensei\ena_private_forest\all_en\2018_all.dbf"
+
+    df = main(dbf_file)
+    csv_file = dbf_file.replace("dbf", "csv")
+    print("")
+    df.to_csv(csv_file)
 
 # %%
