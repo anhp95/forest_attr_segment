@@ -1,8 +1,8 @@
-# forest_attr_segment
+# Forest Attributes Segmentations
 
 **Update on 2022/10/02. Provide reclassification step to enhance the resolution of the result image (only for forest species)**
 
-### Introduction
+## Introduction
 
 This is the Pytorch (1.9.1) implementation of Deep Learning model in "FOREST-RELATED SDG ISSUES MONITORING FOR DATA-SCARE REGIONS EMPLOYING MACHINE LEARNING AND REMOTE SENSING - A CASE STUDY FOR ENA CITY, JAPAN".
 
@@ -11,7 +11,7 @@ This is the Pytorch (1.9.1) implementation of Deep Learning model in "FOREST-REL
 
 ![Results](figure/result.png)
 
-### Installation
+## Installation
 
 The source code is test with Anaconda and Python 3.9.7.
 
@@ -28,7 +28,7 @@ The source code is test with Anaconda and Python 3.9.7.
     conda env create -f environment.yml
 ```
 
-### Training
+## Training
 
 Follow these steps to train the model with our dataset
 
@@ -47,7 +47,7 @@ Follow these steps to train the model with our dataset
                   [--logs_file LOGS_FILE] [--pin_memory] [--no_workers NO_WORKERS]
    ```
 
-### Inference
+## Inference
 
 1. Input arguments: (see the full set of input arguments via python infer_nn.py --help)
 
