@@ -1,4 +1,4 @@
-# Forest Attributes Segmentations
+# Forest Attributes Segmentation
 
 **Update on 2022/10/02. Provide reclassification step to enhance the resolution of the result image (only for forest species)**
 
@@ -6,8 +6,8 @@
 
 This is the Pytorch (1.9.1) implementation of Deep Learning model in "FOREST-RELATED SDG ISSUES MONITORING FOR DATA-SCARE REGIONS EMPLOYING MACHINE LEARNING AND REMOTE SENSING - A CASE STUDY FOR ENA CITY, JAPAN".
 
-- [x] Support different 2D/3D UNET based architecture with Atrous Convolution Blocks for forest attribute (species, age) segmentation
-- [x] Support training/validation dataset from Sentinel 1/2 in GIFU prefecture - Japan.
+- Support different 2D/3D UNET based architecture with Atrous Convolution Blocks for forest attribute (species, age) segmentation
+- Support training/validation dataset from Sentinel 1/2 in GIFU prefecture - Japan.
 
 ![Results](figure/result.png)
 
@@ -29,6 +29,8 @@ The source code is test with Anaconda and Python 3.9.7.
 ```
 
 ## Training
+
+![Study Area](figure/gt-ge.png)
 
 Follow these steps to train the model with our dataset
 
