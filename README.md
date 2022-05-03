@@ -39,7 +39,7 @@ The source code is test with Anaconda and Python 3.9.7.
 
 Follow these steps to train the model with our dataset
 
-1. Download the dataset via [Google Drive](https://drive.google.com/drive/folders/1j8Japh4UmZAyoHueJX9C_rb8muqS3plW?usp=sharing)
+1. Download the dataset via [Google Drive](https://drive.google.com/file/d/1cLgWPIXMDjtn05SCAB0bfnY6wyqPUnur/view?usp=sharing)
 
 2. Configure the dataset path in [mypath.py](https://github.com/anhp95/forest_attr_segment/blob/main/mypath.py)
 
