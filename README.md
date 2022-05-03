@@ -9,6 +9,13 @@ This is the Pytorch (1.9.1) implementation of Deep Learning model in "FOREST-REL
 - Support different 2D/3D UNET based architecture with Atrous Convolution Blocks for forest attribute (species, age) segmentation
 - Support training/validation dataset from Sentinel 1/2 in GIFU prefecture - Japan.
 
+### Study area and data collection
+
+Training data was collected from [国土数値情報ダウンロードサービス](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A45.html)
+![Study Area](figure/gt-ge.png)
+
+### Results
+
 ![Results](figure/result.png)
 
 ## Installation
@@ -29,8 +36,6 @@ The source code is test with Anaconda and Python 3.9.7.
 ```
 
 ## Training
-
-![Study Area](figure/gt-ge.png)
 
 Follow these steps to train the model with our dataset
 
