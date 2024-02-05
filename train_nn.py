@@ -6,13 +6,17 @@ import torch.nn as nn
 import pandas as pd
 import numpy as np
 import argparse
-from tqdm import tqdm
+import matplotlib.pyplot as plt
+import torch.nn.functional as F
 
+from tqdm import tqdm
 from mypath import get_path_train
 from model.deep_forest import DeepForestSpecies
 from utils.check_accuracy import check_accuracy
 from utils.checkpoint import save_checkpoint, load_checkpoint
 from utils.loader import get_loaders
+from utils.loader import load_npy
+from PIL import Image
 
 # INIT_LR = 1e-5
 # BATCH_SIZE = 16
@@ -21,7 +25,7 @@ from utils.loader import get_loaders
 # PIN_MEMORY = True
 # LOAD_MODEL = False
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-MAX_ACC = 0.80
+MAX_ACC = 0.40
 FEATURES = [64, 128]
 
 
@@ -162,8 +166,8 @@ class Trainer:
         logs_df["acc"] = acc_values
         logs_df["f1"] = f1_values
         logs_df["kappa"] = kappa_values
-        # logs_df.loss.plot(label="Loss", legend=True)
-        # logs_df.acc.plot(secondary_y=True, label="Accuracy", legend=True)
+        logs_df.loss.plot(label="Loss", legend=True)
+        logs_df.acc.plot(secondary_y=True, label="Accuracy", legend=True)
 
         logs_df.to_csv(self.logs_file)
 
@@ -256,7 +260,51 @@ def main():
     trainer.train()
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
+# %%
+class Args:
+    def __init__(self) -> None:
+        self.forest_attr = "spec"
+        self.backbone = "3d_adj_emd_acb"
+        self.num_epochs = 20
+        self.lr = 1e-5
+        self.batch_size = 16
+        self.load_model = None
+        self.logs_file = "logs/"
+        self.pin_memory = "store_true"
+        self.no_workers = 0
+        self.features = FEATURES
+
+args = Args()
+trainer = Trainer(args)
+trainer.train()
+
+# %%
+checkpoint_file = "checkpoint/spec/2dp1p2/0.57.pth.tar"
+
+model = DeepForestSpecies(
+        in_channels=27,
+        out_channels=4,
+        backbone=args.backbone,
+        features=FEATURES,
+    ).to(DEVICE)
+load_checkpoint(checkpoint_file, model)
+
+for i in range(100):
+    in_npy = f"data/data_train/data_spec_27d_32x32/val/image/{i}.npy"
+    mask_npy = f"data/data_train/data_spec_27d_32x32/val/mask/{i}.npy"
+
+    data = torch.from_numpy(np.load(in_npy).reshape(1, -1, 32, 32))
+    mask = np.load(mask_npy)
+
+    data = data.to(DEVICE)
+    prob_y = F.softmax(model(data), dim=1)
+    preds = prob_y.max(1, keepdims=True)[1].cpu().detach().numpy().reshape(32, 32)
+    fig, axs = plt.subplots(1, 2)
+    axs[0].imshow(preds)
+    axs[1].imshow(mask)
+    axs[0].set_title("Prediction")
+    axs[1].set_title("Ground Truth")
 # %%

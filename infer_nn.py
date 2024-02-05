@@ -9,7 +9,7 @@ import argparse
 from model.deep_forest import DeepForestSpecies
 from recls import ReClassification
 
-from forest import gen_predicted_map
+from Forest import gen_predicted_map
 from mypath import get_path_infer
 from utils.checkpoint import load_checkpoint
 from utils.loader import load_npy

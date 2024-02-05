@@ -1,4 +1,4 @@
-name: co2
+name: pft
 channels:
   - pytorch
   - anaconda
@@ -210,15 +210,15 @@ dependencies:
   - zlib=1.2.11=h8ffe710_1013
   - zstd=1.5.0=h6255e5f_0
   - pip:
-    - beautifulsoup4==4.10.0
-    - charset-normalizer==2.0.7
-    - deep-translator==1.5.4
-    - geocoder==1.38.1
-    - ratelim==0.1.6
-    - requests==2.26.0
-    - simpledbf==0.2.6
-    - soupsieve==2.3
-    - torchsummary==1.5.1
-    - urllib3==1.26.7
-    - wget==3.2
+      - beautifulsoup4==4.10.0
+      - charset-normalizer==2.0.7
+      - deep-translator==1.5.4
+      - geocoder==1.38.1
+      - ratelim==0.1.6
+      - requests==2.26.0
+      - simpledbf==0.2.6
+      - soupsieve==2.3
+      - torchsummary==1.5.1
+      - urllib3==1.26.7
+      - wget==3.2
 prefix: C:\Users\chick\anaconda3\envs\co2

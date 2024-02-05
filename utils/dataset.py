@@ -9,7 +9,7 @@ class NFDataset(Dataset):
         self.image_dir = image_dir
         self.mask_dir = mask_dir
         # self.transform = transform
-        self.images = os.listdir(image_dir)
+        self.images = os.listdir(image_dir)[:500]
         self.img_shape = img_shape
         self.cnn_mode = cnn_mode
 
