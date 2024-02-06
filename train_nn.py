@@ -267,44 +267,60 @@ def main():
 class Args:
     def __init__(self) -> None:
         self.forest_attr = "spec"
-        self.backbone = "3d_adj_emd_acb"
-        self.num_epochs = 20
+        self.backbone = "2dp1p2"
+        self.num_epochs = 5
         self.lr = 1e-5
         self.batch_size = 16
         self.load_model = None
         self.logs_file = "logs/"
         self.pin_memory = "store_true"
         self.no_workers = 0
-        self.features = FEATURES
+        self.features = [64, 128, 256, 512]
 
 args = Args()
 trainer = Trainer(args)
 trainer.train()
 
 # %%
-checkpoint_file = "checkpoint/spec/2dp1p2/0.57.pth.tar"
+from matplotlib import colors
+norm = colors.Normalize(vmin=0, vmax=3)
+acc = 0.57
+
+npy_dir = "data/data_train/data_spec_27d_32x32/val/"
+checkpoint_file = f"checkpoint/spec/{args.backbone}/{acc}.pth.tar"
 
 model = DeepForestSpecies(
-        in_channels=27,
+        in_channels=trainer.img_shape[0],
         out_channels=4,
         backbone=args.backbone,
-        features=FEATURES,
+        features=trainer.features,
     ).to(DEVICE)
 load_checkpoint(checkpoint_file, model)
 
-for i in range(100):
-    in_npy = f"data/data_train/data_spec_27d_32x32/val/image/{i}.npy"
-    mask_npy = f"data/data_train/data_spec_27d_32x32/val/mask/{i}.npy"
+for i in range(10,20):
+    in_npy = f"{npy_dir}/image/{i}.npy"
+    mask_npy = f"{npy_dir}/mask/{i}.npy"
 
-    data = torch.from_numpy(np.load(in_npy).reshape(1, -1, 32, 32))
+    data_npy = np.load(in_npy)
+    data = torch.from_numpy(data_npy.reshape(1, -1, 32, 32))
+    # data = torch.from_numpy(np.load(in_npy).reshape(1, 13, 4, 32, 32))
     mask = np.load(mask_npy)
 
     data = data.to(DEVICE)
     prob_y = F.softmax(model(data), dim=1)
     preds = prob_y.max(1, keepdims=True)[1].cpu().detach().numpy().reshape(32, 32)
-    fig, axs = plt.subplots(1, 2)
-    axs[0].imshow(preds)
-    axs[1].imshow(mask)
-    axs[0].set_title("Prediction")
-    axs[1].set_title("Ground Truth")
+    # preds = prob_y.max(1, keepdims=True)[1].cpu().detach().numpy()[:,:,1].reshape(32, 32)
+    fig, axs = plt.subplots(1, 3)
+    org_clb = axs[0].imshow(data_npy[:,:, 0].reshape(32, 32))
+    mask_clb = axs[1].imshow(preds, vmin=0, vmax=3, cmap="Pastel1")
+    axs[2].imshow(mask, vmin=0, vmax=3, cmap="Pastel1")
+
+    axs[0].set_title("Band 1")
+    axs[1].set_title("Prediction")
+    axs[2].set_title("Ground truth")
+
+fig.colorbar(org_clb, ax=axs[0], orientation='horizontal', fraction=.1)
+fig.colorbar(mask_clb, ax=axs[1:], orientation='horizontal', fraction=.1)
+
+
 # %%
